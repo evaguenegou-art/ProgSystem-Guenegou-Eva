@@ -13,8 +13,8 @@ public class Gradient {
         }
 
         try {
-            img.save_txt("gradient_txt.ppm");
-			img.save_raw("gradient_raw.ppm");
+            img.save_txt("gradient_txt.ppm"); // version texte (P3)
+			img.save_raw("gradient_raw.ppm"); // version binaire (P6)
             System.out.println("Dégradé créé avec succès !");
         } catch (Exception e) {
             System.err.println("Erreur lors de la création du dégradé : " + e.getMessage());
