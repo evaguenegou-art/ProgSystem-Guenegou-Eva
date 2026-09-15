@@ -1,4 +1,5 @@
 import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Image {
@@ -49,5 +50,23 @@ public class Image {
             writer.write("\n");
         }
         writer.close();
+    }
+	
+	/**
+     * Sauvegarde l'image au format binaire PPM (P6)
+     */
+    public void save_raw(String filename) throws IOException {
+        FileOutputStream fos = new FileOutputStream(filename);
+        
+		String enTete = "P6\n" + width + " " + height + "\n255\n";
+		fos.write(enTete.getBytes()); // écriture directe des octets
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                fos.write(pixels[y][x][0]); // r
+                fos.write(pixels[y][x][1]); // g
+                fos.write(pixels[y][x][2]); // b
+            }
+        }
+        fos.close();
     }
 }
