@@ -32,12 +32,13 @@ public class MemoryManager {
     private void initializeFilesystem() {
         writeSuperblock();
 
-        // TODO:
         // Réserver les blocs système 0 à 128.
+		for (int block = 0; block <= 128; block++) {
+            setBlockUsed(block, true);
+        }
     }
 
     private void writeSuperblock() {
-        // TODO:
         // Utiliser Utils pour écrire les métadonnées.
 
         Utils.writeString(
@@ -70,4 +71,60 @@ public class MemoryManager {
     public byte[] getFilesystemMemory() {
         return memory;
     }
+	
+	public boolean setBlockUsed(
+			int blockNumber,
+			boolean used) {
+
+		if (blockNumber < 0 ||
+			blockNumber >= NUM_BLOCKS) {
+			return false;
+		}
+
+		int byteIndex = blockNumber / 8;
+		int bitPosition = blockNumber % 8;
+		int offset = BITMAP_OFFSET + byteIndex;
+
+		if (used) {
+			// Positionner le bit à 1.
+			memory[offset] = (byte)(memory[offset] | (1 << bitPosition));
+		} else {
+			// Positionner le bit à 0.
+			memory[offset] = (byte) (memory[offset] & ~(1 << bitPosition));
+			
+		}
+
+		return true;
+	}
+
+	public int isBlockUsed(int blockNumber) {
+
+		if (blockNumber < 0 ||
+			blockNumber >= NUM_BLOCKS) {
+			return -1;
+		}
+
+		// Calculer byteIndex.
+		int byteIndex = blockNumber / 8;
+		// Calculer bitPosition.
+		int bitPosition = blockNumber % 8;
+        int offset = BITMAP_OFFSET + byteIndex;
+		// Lire le bit.
+		int bit = (memory[offset] >> bitPosition) & 1;
+
+        return bit;
+	}
+
+	public int allocateBlock() {
+
+		// TODO:
+		// Parcourir les blocs de données :
+		// 129 .. NUM_BLOCKS - 1.
+		//
+		// Retourner le premier bloc libre.
+		// Le marquer immédiatement comme utilisé.
+
+		return -1;
+	}
+
 }
