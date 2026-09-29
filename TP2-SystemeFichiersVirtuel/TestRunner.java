@@ -5,6 +5,7 @@ public class TestRunner {
 		testStep3();
 		testStep4();
 		testStep5();
+		testStep6();
 	}
 	
 	public static void testStep2() {

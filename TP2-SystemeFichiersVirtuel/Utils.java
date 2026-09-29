@@ -69,9 +69,9 @@ public class Utils {
 		// 3. Nettoyer le reste de la zone avec des zéros.
 		for (int decalage = 0; decalage < maxLength; decalage++) {
 			if (decalage < bytes.length) {
-				memory[offset + decalage] = bytes[decalage]; // Étape 2 : copie
+				memory[offset + decalage] = bytes[decalage];
 			} else {
-				memory[offset + decalage] = 0;               // Étape 3 : nettoyage
+				memory[offset + decalage] = 0;
 			}
 		}
 		return maxLength;
