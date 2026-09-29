@@ -33,7 +33,7 @@ public class MemoryManager {
         writeSuperblock();
 
         // Réserver les blocs système 0 à 128.
-		for (int block = 0; block <= 128; block++) {
+		for (int block = 0; block < 128; block++) {
             setBlockUsed(block, true);
         }
     }
@@ -117,10 +117,11 @@ public class MemoryManager {
 
 	public int allocateBlock() {
 
-		// TODO:
 		// Parcourir les blocs de données :
 		// 129 .. NUM_BLOCKS - 1.
-		//
+		for (int block = 129; block <; ) {
+			
+		
 		// Retourner le premier bloc libre.
 		// Le marquer immédiatement comme utilisé.
 
