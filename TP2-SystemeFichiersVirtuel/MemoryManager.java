@@ -33,8 +33,8 @@ public class MemoryManager {
         writeSuperblock();
 
         // Réserver les blocs système 0 à 128.
-		for (int block = 0; block < 128; block++) {
-            setBlockUsed(block, true);
+		for (int blockNumber = 0; blockNumber < 128; blockNumber++) {
+            setBlockUsed(blockNumber, true);
         }
     }
 
@@ -90,7 +90,7 @@ public class MemoryManager {
 			memory[offset] = (byte)(memory[offset] | (1 << bitPosition));
 		} else {
 			// Positionner le bit à 0.
-			memory[offset] = (byte) (memory[offset] & ~(1 << bitPosition));
+			memory[offset] = (byte) (memory[offset] ^ (1 << bitPosition));
 			
 		}
 
@@ -108,7 +108,7 @@ public class MemoryManager {
 		int byteIndex = blockNumber / 8;
 		// Calculer bitPosition.
 		int bitPosition = blockNumber % 8;
-        int offset = BITMAP_OFFSET + byteIndex;
+        int offset = BITMAP_OFFSET + byteIndex; // =bitmapOffset
 		// Lire le bit.
 		int bit = (memory[offset] >> bitPosition) & 1;
 
@@ -119,11 +119,14 @@ public class MemoryManager {
 
 		// Parcourir les blocs de données :
 		// 129 .. NUM_BLOCKS - 1.
-		for (int block = 129; block <; ) {
-			
-		
-		// Retourner le premier bloc libre.
-		// Le marquer immédiatement comme utilisé.
+		for (int blockNumber = 129; blockNumber < NUM_BLOCKS; blockNumber++) {
+			// Retourner le premier bloc libre.
+			if (isBlockUsed(blockNumber) == 0) {
+                // Le marquer immédiatement comme utilisé.
+                setBlockUsed(blockNumber, true);
+                return blockNumber;
+            }
+		}
 
 		return -1;
 	}
