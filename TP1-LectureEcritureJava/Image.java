@@ -60,6 +60,9 @@ public class Image {
         
 		String enTete = "P6\n" + width + " " + height + "\n255\n";
 		fos.write(enTete.getBytes()); // écriture directe des octets
+		// correction -> aurait pu faire :
+		// byte[] data = new byte[getH...*getW*3]
+		// avec (y*w+x)*3+c
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 fos.write(pixels[y][x][0]); // r
@@ -67,6 +70,8 @@ public class Image {
                 fos.write(pixels[y][x][2]); // b
             }
         }
+		// correction -> aurait pu faire :
+		// fos.write(data)
         fos.close();
     }
 }
