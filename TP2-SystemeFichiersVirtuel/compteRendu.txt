@@ -1,0 +1,34 @@
+Question 1
+Un tableau d'octets n'a pas de types intégrés -> il faut fixer l'ordre de rangement pour que tous les modules ordonnent les octets de la même manière lors de la lecture et de l'écriture.
+Si writeInt écrit en Big-Endian et que readInt lit en Little-Endian, l'ordre des octets est inversé et les données sont totalement corrompues.
+
+Question 2
+En Java, un byte est signé (de -128 à 127). Quand on le transforme en int, Java rajoute des 1 inutiles. Le & 0xFF nettoie ces bits pour récupérer la vraie valeur positive (0 à 255).
+
+Question 3
+Si writeInt et readInt font la même erreur de décalage, le test passe alors que la structure en mémoire est incorrecte.
+Il faut tester des cas limites (0, -1, valeurs max/min, masques).
+Vérifier octet par octet garantit que les données sont empilées au bon endroit physiquement.
+
+Question 4
+1 bit par bloc au lieu de 32 bits (un int), soit 32 fois moins de place consommée.
+Taille(octets) = Nombre de blocs/8.
+
+Question 5
+Le système cherche les structures à des adresses fixes sans chercher un annuaire.
+Si le bitmap bouge sans prévenir le code, on lit ou écrase par erreur les inodes ou le superbloc.
+
+Question 6
+Garder les métadonnées séparées permet d'avoir une table fixe et rapide à parcourir, peu importe la taille des fichiers.
+L'inode ne stocke pas le texte lui-même, il contient juste la liste des numéros de blocs où sont rangées les données.
+
+Question 7
+Les blocs 0 à 128 sont réservés au système.
+Commencer à 0 écraserait les métadonnées vitales du système de fichiers dès qu'on crée un fichier.
+
+Question 8
+Deux systèmes peuvent avoir la même mémoire libre mais organisée différemment.
+Non fragmenté :
+O O O O L L L L
+Fragmenté :
+O L O L O L O L
