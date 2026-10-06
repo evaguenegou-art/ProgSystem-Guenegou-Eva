@@ -150,4 +150,27 @@ public class VirtualFileSystem {
 
 		return fileData;
 	}
+	
+		public boolean deleteFile(int inodeNum) {
+		Inode inode = new Inode(memoryManager, inodeNum);
+
+		// Si déjà libre rien à supprimer
+		if (inode.getFileType() == 0) {
+			return false;
+		}
+
+		// Libére les blocs de données associés dans le bitmap
+		int[] pointers = inode.getDirectPointers();
+		for (int blockNum : pointers) {
+			if (blockNum != 0) {
+				memoryManager.setBlockUsed(blockNum, false);
+			}
+		}
+
+		// Réinitialise l'inode
+		int[] emptyPointers = new int[Inode.DIRECT_POINTERS];
+		inode.writeToMemory(0, 0, 0L, 0L, emptyPointers, 0, (short) 0, 0);
+
+		return true;
+	}
 }
