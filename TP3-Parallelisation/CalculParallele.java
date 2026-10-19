@@ -15,6 +15,7 @@ public class CalculParallele {
             threads[i] = new Calcule(DONNEES[i], MULTIPLICATEUR, i);
 		}
 		
+		// Démarre tous les threads
 		for (int i = 0; i < threads.length; i++) {
             threads[i].start();
 		}
